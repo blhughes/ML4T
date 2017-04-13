@@ -11,7 +11,7 @@ def update_data(symbols=['SPY']):
     if 'SPY' not in symbols:
         symbols = symbols + ['SPY']
     for symbol in symbols:
-        data_file=urllib2.urlopen("http://chart.finance.yahoo.com/table.csv?s=%s&a=0&b=2&c=1980&d=2&e=30&f=2017&g=d&ignore=.csv"%symbol)
+        data_file=urllib2.urlopen("http://chart.finance.yahoo.com/table.csv?s=%s&a=0&b=2&c=1980&d=2&e=30&f=2030&g=d&ignore=.csv"%symbol)
         f = open(symbol_to_path(symbol),'w')
         f.write(data_file.read())
         f.close()
