@@ -4,6 +4,74 @@ import datetime as dt
 import util
 import QLearner
 
+
+class TradingEnvironment(object):
+    class Action:
+        BUY = 0
+        SELL = 1
+        WAIT = 2
+    
+    
+    def __init__(self, symbol = 'SPY',
+        sd = dt.datetime(2008,1,1),
+        ed = dt.datetime(2009,12,31),
+        sv = 10000):
+        
+        self.cash = sv
+        self.shares = 0
+    
+        dates = pd.date_range(sd-dt.timedelta(100), ed)
+        df = util.get_data([symbol],dates)[symbol]
+        normalized = df/df.ix[0]
+        sma = normalized.rolling(50).mean()
+        df = pd.DataFrame(df).assign(normalized =normalized).assign(sma = sma).assign(psma = normalized / sma)[sd:]
+        daily_returns = df[symbol].copy()
+        daily_returns[1:] =  (df[symbol].ix[1:] / df[symbol].ix[:-1].values) -1
+        daily_returns.ix[0] = 0
+        df = df.assign(dr = daily_returns)
+        df = df.assign(qsma = pd.qcut(df['psma'], 100, labels=False))    
+        
+        self.market = df.itertuples()
+        self.current_stats = None
+      
+        self.action = self.Action()
+    
+    def buy(self):
+        if self.shares >= 200:
+            return -1 #Invalid purchase
+        self.shares = self.shares + 100
+        self.cash = self.cash - (100 * self.current_stats[1] ) # Closing price
+        return 1 #Reward
+        
+    
+    def sell(self):
+        if self.shares <= 0:
+            return -1 #Invalid sale
+        self.shares = self.shares - 100
+        self.cash = self.cash + (100 * self.current_stats[1] ) # Closing price
+        return 1 #Reward
+    
+    def wait(self):
+        pass
+    
+    def discritize_state(self):
+        return 1
+    
+    def increment(self,action):
+        print self.action.BUY
+        # Calculate reward based on action
+        r = {
+          self.action.BUY:  self.buy,
+          self.action.SELL: self.sell,
+          self.action.WAIT: self.wait,
+        }[action]()
+        
+        
+        # Move foward one day and calculate new state
+        
+        s = self.discritize_state()
+        return s,r #state, reward
+
 class StrategyLearner(object):
 
 
