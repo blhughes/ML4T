@@ -49,7 +49,7 @@ class QLearner(object):
         self.s = s
         action = rand.randint(0, self.num_actions-1)
         if rand.random() > self.rar:
-          action = np.argmax(self.Q[s_prime, ])
+          action = np.argmax(self.Q[s, ])
         if self.verbose: print "s =", s,"a =",action
         return action
 
