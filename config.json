@@ -1,0 +1,36 @@
+{"SpotFleetRequestConfig": {
+  "IamFleetRole": "arn:aws:iam::896021279882:role/aws-ec2-spot-fleet-role",
+  "AllocationStrategy": "lowestPrice",
+  "TargetCapacity": 1,
+  "SpotPrice": "0.05",
+  "ValidFrom": "2017-06-03T16:56:40Z",
+  "ValidUntil": "2018-06-03T16:56:40Z",
+  "TerminateInstancesWithExpiration": true,
+  "LaunchSpecifications": [
+    {
+      "ImageId": "ami-46c1b650",
+      "InstanceType": "r4.xlarge",
+      "SubnetId": "subnet-ac567790, subnet-4b825111, subnet-fb3badb3",
+      "KeyName": "Linux Desktop",
+      "BlockDeviceMappings": [
+        {
+          "DeviceName": "/dev/sda1",
+          "Ebs": {
+            "DeleteOnTermination": false,
+            "VolumeType": "gp2",
+            "VolumeSize": 8,
+            "SnapshotId": "snap-0c136bf135a86351f"
+          }
+        }
+      ],
+      "SecurityGroups": [
+        {
+          "GroupId": "sg-52dcdd2c"
+        }
+      ],
+      "UserData": "IyEgL2Jpbi9iYXNoCgp5dW0gLXkgaW5zdGFsbCBweXRob24tdmlydHVhbGVudiBAZGV2ZWxvcG1lbnQgZ2l0CgpjZCAvdG1wCmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vYmxodWdoZXMvTUw0VApjZCBNTDRUCnZpcnR1YWxlbnYgL3RtcC9lbnYKc291cmNlIC90bXAvZW52L2Jpbi9hY3RpdmF0ZQpwaXAgaW5zdGFsbCAtLXVwZ3JhZGUgcGlwCnBpcCBpbnN0YWxsIC1yIHJlcXVpcmVtZW50cy50eHQK"
+    }
+  ],
+  "Type": "request"
+}
+}
