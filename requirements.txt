@@ -1,0 +1,10 @@
+notebook
+jupyter
+pandas
+matplotlib
+scipy
+scikit-learn
+pandas_datareader
+seaborn
+tensorflow
+keras
